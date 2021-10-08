@@ -5,10 +5,13 @@ import PropTypes from 'prop-types';
 import Avatar from "antd/lib/avatar/avatar";
 
 import React, { useCallback } from "react";
+import { useDispatch } from "react-redux";
+import { logoutAction } from '../reducers';
 
-const UserProfile = ({setIsLogedIn}) => {
+const UserProfile = () => {
+  const dispatch = useDispatch();
   const onLogOut = useCallback(()=>{
-    setIsLogedIn(false);
+    dispatch(logoutAction());
   },[]);
   
   return (
