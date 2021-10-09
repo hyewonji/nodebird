@@ -10,7 +10,7 @@ import { useForm } from "react-hook-form";
 
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
-import { loginAction } from "../reducers";
+import { loginAction } from "../reducers/user";
 
 const FormContainer = styled.div`
   padding: 10px;
@@ -33,8 +33,9 @@ const LoginForm = () => {
   const dispatch = useDispatch();
   const {control, getValues, handleSubmit} = useForm();
   
-  const onSubmit = useCallback(()=> {
-    console.log(getValues("id"));
+  const onSubmit = useCallback((data)=> {
+    console.log(data);
+    console.log(getValues('id'))
     dispatch(loginAction({id:getValues('id'),password: getValues('password')}));
   },[]);
   
@@ -42,24 +43,20 @@ const LoginForm = () => {
     <FormContainer>
       <InputContainer>
         <Lable>아이디</Lable>
-        <Input name="id" ></Input>
+        <Input name="id"></Input>
       </InputContainer>
       <InputContainer>
         <Lable>비밀번호</Lable>
-        <Input name="password"></Input>
+        <Input name="password" ></Input>
       </InputContainer>
       <ButtonsContainer>
         <Button onClick={handleSubmit(onSubmit)}>로그인</Button>
         <Button type="primary">
-        <Link href="/signup"><a>회원가입</a></Link>
+          <Link href="/signup"><a>회원가입</a></Link>
         </Button>
       </ButtonsContainer>
     </FormContainer>
   );
-}
-
-LoginForm.propTypes = {
-  setIsLogedIn: PropTypes.node.isRequired
 }
 
 export default LoginForm;

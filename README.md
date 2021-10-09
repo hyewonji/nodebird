@@ -35,3 +35,9 @@ TIP
    <Tag style={ style }/>
 
 4. rerendering → return 부분중 달라진 부분만! 다시 그려준다 ( return 해주는 부분을 virture DOM이라고 할 수 있다)
+
+# Redux
+
+주의
+
+1. reducer switch 문 작성할 때, `default return state`를 작성해준다.(안 쓸경우 state 불러올 때 undefined 에러가 발생한다.)
