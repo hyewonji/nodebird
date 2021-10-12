@@ -35,8 +35,57 @@ TIP
    <Tag style={ style }/>
 
 4. rerendering → return 부분중 달라진 부분만! 다시 그려준다 ( return 해주는 부분을 virture DOM이라고 할 수 있다)
+   <br>
 
 # Redux
+
+패키지 설치
+
+```
+$ npm i next-redux-wrapper
+$ npm i react-redux
+$ npm i redux
+$ npm i redux-devtools-extension
+```
+
+미들웨어 연결
+
+```jsx
+const enhancer =
+  process.env.NODE_ENV === "production"
+    ? compose(applyMiddleware(...middlewares))
+    : composeWithDevTools(applyMiddleware(...middlewares));
+const store = createStore(rootReducer, enhancer);
+```
+
+리듀서 분리, 결합
+
+- 각각의 기능 별로 리듀서를 생성한 후, reducers/index.js 파일에서 리듀서를 합쳐준다.
+- 리듀서를 합쳐줄 때에는 redux에서 제공하는 combineReducers함수를 사용한다.
+- 본 프로젝트에서는 리듀서에서 HYDRATE를 사용하기 위해 index리듀서를 추가해 주었다.
+
+```jsx
+import { HYDRATE } from "next-redux-wrapper";
+import { combineReducers } from "redux";
+import user from "./user";
+import post from "./post";
+
+// combineReducers로 나눠져있는 리듀서들을 합쳐준다.
+// HYDRATE를 사용하기 위해 index 리듀서를 추가한다.
+const rootReducer = combineReducers({
+  index: (state = {}, action) => {
+    switch (action.type) {
+      case HYDRATE:
+        console.log("HYDRATE", action);
+        return { ...state, ...action.payload };
+      default:
+        return state;
+    }
+  },
+  user,
+  post,
+});
+```
 
 주의
 
